@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ein Wochenende in Köln</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap');
+
+:root{
+  --paper: #FBF1EC;
+  --paper-alt: #F5E1DA;
+  --ink: #3C2A2E;
+  --ink-soft: #7C5C60;
+  --wine: #B4536A;
+  --wine-deep: #7A2E44;
+  --river: #9C7A9E;
+  --brass: #C99566;
+  --line: rgba(60,42,46,0.14);
+  --radius: 3px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Work Sans', sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{color:var(--wine);}
+:focus-visible{outline:2px solid var(--wine); outline-offset:3px;}
+
+.wrap{
+  max-width:720px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:20;
+  background:rgba(251,241,236,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:720px; margin:0 auto; padding:14px 24px;
+  display:flex; gap:22px; align-items:center;
+  overflow-x:auto;
+  font-size:14px;
+}
+.nav-inner a{
+  color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+}
+.nav-inner a:hover{ color:var(--wine); border-color:var(--wine); }
+.nav-title{
+  font-family:'Fraunces', serif; font-weight:600; color:var(--wine);
+  margin-right:auto; font-size:15px;
+}
+
+/* ---------- Hero ---------- */
+.hero{ padding:64px 0 8px; }
+.hero .kicker{
+  font-family:'Work Sans', sans-serif; font-size:14px; color:var(--river);
+  margin:0 0 10px;
+}
+.hero h1{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:clamp(2.2rem, 5vw, 3.4rem);
+  line-height:1.05;
+  margin:0 0 18px;
+  color:var(--ink);
+  max-width:11ch;
+}
+.hero p{
+  font-size:17px; color:var(--ink-soft); max-width:46ch; margin:0 0 28px;
+}
+.hero-meta{
+  display:flex; flex-wrap:wrap; gap:24px 36px; font-size:14px; color:var(--ink-soft);
+}
+.hero-meta div strong{
+  display:block; font-family:'Fraunces', serif; font-weight:600; font-size:16px; color:var(--ink);
+}
+
+.skyline{ width:100%; max-width:280px; height:auto; margin-top:32px; }
+.skyline path, .skyline line{ stroke:var(--wine); fill:none; stroke-width:1.6; stroke-linecap:round; }
+.skyline .river{ stroke:var(--river); }
+
+/* ---------- Journey (Zugverbindungen) ---------- */
+.journey{ padding:40px 0 8px; }
+.journey .day-head{ margin-bottom:24px; }
+.journey-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+@media (max-width:600px){ .journey-grid{ grid-template-columns:1fr; } }
+.journey-card{
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:20px 22px;
+}
+.journey-label{ display:block; font-size:12.5px; color:var(--river); margin-bottom:14px; }
+.journey-route{ display:flex; align-items:center; gap:12px; }
+.journey-route .stop{ font-size:13px; color:var(--ink-soft); white-space:nowrap; }
+.journey-route .stop strong{
+  display:block; font-family:'Fraunces', serif; font-weight:600; font-size:19px; color:var(--ink);
+}
+.journey-line{
+  flex:1; height:1px; margin-top:-8px;
+  background:repeating-linear-gradient(to right, var(--brass) 0 4px, transparent 4px 9px);
+  position:relative;
+}
+.journey-line::before, .journey-line::after{
+  content:''; position:absolute; top:-2.5px; width:5px; height:5px; border-radius:50%; background:var(--brass);
+}
+.journey-line::before{ left:0; }
+.journey-line::after{ right:0; }
+.journey-note{ margin:14px 0 0; font-size:13.5px; color:var(--ink-soft); }
+
+/* ---------- Overview cards ---------- */
+.overview{ padding:36px 0 8px; }
+.overview-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:640px){ .overview-grid{ grid-template-columns:1fr; } }
+.overview-card{
+  display:block; text-decoration:none;
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 20px; transition:border-color .15s ease, background .15s ease;
+}
+.overview-card:hover{ border-color:var(--wine); background:var(--paper-alt); }
+.overview-day{
+  display:block; font-family:'Fraunces', serif; font-weight:600; font-size:17px; color:var(--wine); margin-bottom:6px;
+}
+.overview-text{ font-size:13.5px; color:var(--ink-soft); line-height:1.5; }
+
+/* ---------- Day sections ---------- */
+.day{ padding:52px 0; border-top:1px solid var(--line); }
+.day-alt{ background:var(--paper-alt); }
+.day-head{
+  display:flex; align-items:baseline; gap:14px; margin-bottom:34px; flex-wrap:wrap;
+}
+.day-head h2{
+  font-family:'Fraunces', serif; font-weight:600; font-size:clamp(1.7rem, 4vw, 2.3rem);
+  margin:0; color:var(--wine);
+}
+.day-head span{
+  font-size:14px; color:var(--ink-soft);
+}
+
+.event{
+  display:grid;
+  grid-template-columns:76px 1fr;
+  gap:18px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+.event:last-child{ border-bottom:none; }
+.event .time{
+  font-family:'Fraunces', serif; font-weight:500; font-size:15px; color:var(--brass);
+  padding-top:2px;
+}
+.event h3{
+  font-family:'Fraunces', serif; font-weight:600; font-size:19px; margin:0 0 6px; color:var(--ink);
+}
+.event p{ margin:0; font-size:15px; color:var(--ink-soft); max-width:52ch; }
+.event .tag{
+  display:inline-block; font-size:12.5px; color:var(--river);
+  border:1px solid var(--river); border-radius:20px; padding:2px 10px; margin-top:8px;
+}
+
+/* ---------- Free-time choice card ---------- */
+.choice{
+  grid-column:1 / -1;
+  background:var(--paper-alt);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 20px 22px;
+  margin-top:4px;
+}
+.day-alt .choice{ background:var(--paper); }
+.choice-head{
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap;
+}
+.choice-head h3{
+  font-family:'Fraunces', serif; font-weight:600; font-size:17px; margin:0; color:var(--ink);
+}
+.choice-head .window{ font-size:13px; color:var(--ink-soft); }
+
+.tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.tabs input{ position:absolute; opacity:0; pointer-events:none; }
+.tabs label{
+  font-size:13.5px; color:var(--ink-soft);
+  border:1px solid var(--line); border-radius:20px;
+  padding:6px 14px; cursor:pointer; user-select:none;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tabs label:hover{ border-color:var(--wine); color:var(--wine); }
+.tabs input:checked + label{
+  background:var(--wine); border-color:var(--wine); color:#fff;
+}
+.panels{ position:relative; }
+.panel{
+  display:none;
+  font-size:15px; color:var(--ink-soft);
+}
+.panel strong{ color:var(--ink); font-family:'Fraunces', serif; font-weight:600; font-size:16px; display:block; margin-bottom:4px; }
+.panel a{ font-weight:600; }
+
+/* wire each tab to its panel */
+#f-cafe-1:checked ~ .panels #p-f-cafe-1,
+#f-cafe-2:checked ~ .panels #p-f-cafe-2,
+#s-morn-1:checked ~ .panels #p-s-morn-1,
+#s-morn-2:checked ~ .panels #p-s-morn-2,
+#s-free-1:checked ~ .panels #p-s-free-1,
+#s-free-2:checked ~ .panels #p-s-free-2,
+#s-free-3:checked ~ .panels #p-s-free-3,
+#s-club-1:checked ~ .panels #p-s-club-1,
+#s-club-2:checked ~ .panels #p-s-club-2,
+#s-club-3:checked ~ .panels #p-s-club-3,
+#so-morn-1:checked ~ .panels #p-so-morn-1,
+#so-morn-2:checked ~ .panels #p-so-morn-2,
+#so-morn-3:checked ~ .panels #p-so-morn-3{
+  display:block;
+}
+
+/* ---------- Info / footer ---------- */
+.info{
+  background:var(--wine-deep); color:#F3E9DC;
+  padding:56px 0 60px; margin-top:8px;
+}
+.info h2{
+  font-family:'Fraunces', serif; font-weight:600; font-size:1.7rem; margin:0 0 28px; color:#fff;
+}
+.info-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px 32px;
+}
+.info-grid h4{
+  font-family:'Work Sans', sans-serif; font-size:13px; color:#D9B98A; margin:0 0 8px; font-weight:500;
+}
+.info-grid p{ margin:0; font-size:14.5px; color:#EFE1CE; line-height:1.6; }
+.info-grid a{ color:#F3E9DC; }
+
+footer{
+  text-align:center; padding:26px 24px; font-size:13px; color:var(--ink-soft);
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-title">Köln, 25.–27.9</span>
+    <a href="#anreise">Anreise</a>
+    <a href="#freitag">Freitag</a>
+    <a href="#samstag">Samstag</a>
+    <a href="#sonntag">Sonntag</a>
+    <a href="#infos">Infos</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Mädelswochenende · NH Köln Altstadt</p>
+    <h1>Drei Tage Rhein, Wein und gute Gespräche</h1>
+    <p>Ein entspanntes Programm für sieben, gebaut aus Südstadt-Kneipen, einem Nachmittag in der Therme und einem Abend mit Domblick — mit Zeit zum Verschnaufen fest eingeplant.</p>
+    <div class="hero-meta">
+      <div><strong>25.–27.9</strong>Freitag bis Sonntag</div>
+      <div><strong><a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a></strong>Holzmarkt 47, Rheinauhafen</div>
+      <div><strong>7 Personen</strong>ab Münster mit dem RE7</div>
+    </div>
+    <svg class="skyline" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 78 L20 30 L28 12 L36 30 L36 78" />
+      <path d="M36 78 L36 30 L44 12 L52 30 L52 78" />
+      <line class="river" x1="0" y1="78" x2="280" y2="78" />
+      <path class="river" d="M120 70 Q150 60 180 70 T260 70" />
+    </svg>
+  </div>
+</header>
+
+<!-- ANREISE -->
+<section class="journey" id="anreise">
+  <div class="wrap">
+    <div class="day-head">
+      <h2>Anreise</h2>
+      <span>RE7, direkt ohne Umsteigen</span>
+    </div>
+    <div class="journey-grid">
+      <div class="journey-card">
+        <span class="journey-label">Hinfahrt · Freitag</span>
+        <div class="journey-route">
+          <div class="stop"><strong>14:34</strong>Münster Hbf</div>
+          <div class="journey-line"></div>
+          <div class="stop"><strong>16:38</strong>Köln Hbf</div>
+        </div>
+        <p class="journey-note">Ca. 2 Std. 4 Min. Alternativ 13:34 → 15:38, falls es früher losgehen soll.</p>
+      </div>
+      <div class="journey-card">
+        <span class="journey-label">Rückfahrt · Sonntag</span>
+        <div class="journey-route">
+          <div class="stop"><strong>12:21</strong>Köln Hbf</div>
+          <div class="journey-line"></div>
+          <div class="stop"><strong>14:22</strong>Münster Hbf</div>
+        </div>
+        <p class="journey-note">Ca. 2 Std. Zeiten kurz vorher via DB Navigator prüfen — im September sind Bauarbeiten auf der Strecke angekündigt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview">
+  <div class="wrap">
+    <div class="overview-grid">
+      <a class="overview-card" href="#freitag">
+        <span class="overview-day">Freitag</span>
+        <span class="overview-text">Ankommen, Tapas bei Meister Gerhard, tanzen bei Em Schnörres</span>
+      </a>
+      <a class="overview-card" href="#samstag">
+        <span class="overview-day">Samstag</span>
+        <span class="overview-text">Claudius Therme, Dinner mit Domblick bei NENI, Cocktails &amp; Tanzen</span>
+      </a>
+      <a class="overview-card" href="#sonntag">
+        <span class="overview-day">Sonntag</span>
+        <span class="overview-text">Rhein-Spaziergang, letzter Kaffee, Rückfahrt nach Münster</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FREITAG -->
+<section class="day" id="freitag">
+  <div class="wrap">
+    <div class="day-head">
+      <h2>Freitag</h2>
+      <span>Ankommen &amp; einleben</span>
+    </div>
+
+    <div class="event">
+      <div class="time">ab 15:00</div>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>Café zum Ankommen</h3>
+          <span class="window">15 – 18 Uhr</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="f-cafe" id="f-cafe-1" checked><label for="f-cafe-1">Ernst Kaffeeröster</label>
+          <input type="radio" name="f-cafe" id="f-cafe-2"><label for="f-cafe-2">Café Rotkehlchen</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-f-cafe-1"><strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a></strong>„Slow Bar"-Kaffee, ruhig und gemütlich — genau richtig, um nach der Zugfahrt anzukommen und zu quatschen.</div>
+          <div class="panel" id="p-f-cafe-2"><strong><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">Café Rotkehlchen</a></strong>Kuchen und belegte Brote, bei Kölner:innen sehr beliebt — dafür oft gut gefüllt.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">18:00</div>
+      <div>
+        <h3><a href="http://www.meister-gerhard.com/" target="_blank" rel="noopener">Meister Gerhard</a></h3>
+        <p>Rathenauplatz 8, ca. 10 Min. vom Hotel. Tapas &amp; Wein, sehr gute Bewertungen, faire Preise, waschechte Südstadt-Atmosphäre.</p>
+        <span class="tag">Reservierung 18 Uhr</span>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">danach</div>
+      <div>
+        <h3><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">Em Schnörres</a></h3>
+        <p>5 Minuten weiter. Stammlokal der Südstadt, drinnen und draußen gemütlich, am Wochenende auch eine Tanzfläche — kein Eintritt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMSTAG -->
+<section class="day day-alt" id="samstag">
+  <div class="wrap">
+    <div class="day-head">
+      <h2>Samstag</h2>
+      <span>Ruhiger Tag mit Wellness-Highlight</span>
+    </div>
+
+    <div class="event">
+      <div class="time">ab 8:00</div>
+      <div>
+        <h3>Frühstück im Hotel</h3>
+        <p>Frühstücksbuffet im <a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a>, ganz ohne Zeitdruck.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">danach</div>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>In Ruhe starten</h3>
+          <span class="window">bis ca. 12:30</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="s-morn" id="s-morn-1" checked><label for="s-morn-1">Ausschlafen im Hotel</label>
+          <input type="radio" name="s-morn" id="s-morn-2"><label for="s-morn-2">Kurzer Spaziergang</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-s-morn-1"><strong>Ausschlafen im Hotel</strong>Keine Uhrzeit, kein Programm — einfach ausruhen, bevor es Richtung Therme geht.</div>
+          <div class="panel" id="p-s-morn-2"><strong>Kurzer Spaziergang</strong>Eine Runde durch die Südstadt oder am Rhein, bevor es zur Therme geht.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">13:00</div>
+      <div>
+        <h3><a href="https://www.claudius-therme.de/" target="_blank" rel="noopener">Claudius Therme</a></h3>
+        <p>Rheinpark, Deutz. 2-Std.-Ticket, Thermalbad &amp; Sauna mit Domblick. Anfahrt: Bahn Richtung Deutz + Bus 150 bis „Thermalbad", ca. 20–25 Min.</p>
+        <span class="tag">Gruppe angemeldet</span>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">15:30–18:00</div>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>Zeit zum Durchatmen</h3>
+          <span class="window">vor dem Abendessen</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="s-free" id="s-free-1" checked><label for="s-free-1">Ruhe im Zimmer</label>
+          <input type="radio" name="s-free" id="s-free-2"><label for="s-free-2">Kaffeepause</label>
+          <input type="radio" name="s-free" id="s-free-3"><label for="s-free-3">Kurzer Bummel</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-s-free-1"><strong>Ruhe im Zimmer</strong>Nach der Therme bleibt nicht viel Zeit bis zum Abendessen — einfach ankommen, umziehen, nichts mehr einplanen.</div>
+          <div class="panel" id="p-s-free-2"><strong>Kaffeepause</strong>Ein ruhiger Stopp auf dem Weg zur Innenstadt, statt eines eigenen Programmpunkts.</div>
+          <div class="panel" id="p-s-free-3"><strong>Kurzer Bummel</strong>Da NENI im Belgischen Viertel liegt, bietet sich ein kurzer Stopp dort unterwegs an, statt extra Zeit einzuplanen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">18:00</div>
+      <div>
+        <h3><a href="https://nenifood.com/restaurants/koln" target="_blank" rel="noopener">NENI</a></h3>
+        <p>25hours Hotel, Im Klapperhof 22–24, 8. Stock, Domblick. Top bewertet, levantinische Küche — der „Splurge"-Abend des Wochenendes.</p>
+        <span class="tag">Reservierung 18 Uhr</span>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">danach</div>
+      <div>
+        <h3><a href="https://monkeybarkoeln.de/" target="_blank" rel="noopener">Monkey Bar</a></h3>
+        <p>Eine Etage weiter, selbes Haus — Sonnenuntergangs-Drink mit Domblick, kein Ortswechsel nötig.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">optional</div>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>Noch tanzen?</h3>
+          <span class="window">alle drei im Belgischen Viertel</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="s-club" id="s-club-1" checked><label for="s-club-1">Barracuda Bar</label>
+          <input type="radio" name="s-club" id="s-club-2"><label for="s-club-2">Hallmackenreuther</label>
+          <input type="radio" name="s-club" id="s-club-3"><label for="s-club-3">Coco Schmitz</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-s-club-1"><strong><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">Barracuda Bar</a></strong>Nur wenige Minuten von der Monkey Bar entfernt. Kleine Tanzfläche, am Wochenende DJs mit elektronischer Musik, dazu richtig gute Cocktails.</div>
+          <div class="panel" id="p-s-club-2"><strong>Hallmackenreuther</strong>Brüsseler Platz 9. Tagsüber Café, abends Bar mit gutem Sound — Kölner Kultadresse seit 1990, entspannter Einstieg vor dem Weiterziehen.</div>
+          <div class="panel" id="p-s-club-3"><strong>Coco Schmitz</strong>Kleiner Kellerklub unter dem Salon Schmitz, verspiegelte Wände, Funk &amp; Electro — für alle, die es später noch etwas tanzlastiger mögen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SONNTAG -->
+<section class="day" id="sonntag">
+  <div class="wrap">
+    <div class="day-head">
+      <h2>Sonntag</h2>
+      <span>Langsam ausklingen</span>
+    </div>
+
+    <div class="event">
+      <div class="time">ab 8:00</div>
+      <div>
+        <h3>Frühstück im Hotel</h3>
+        <p>Letztes gemeinsames Frühstück im <a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a>, bevor die Koffer gepackt werden.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">danach</div>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>Letzte Stunden in Köln</h3>
+          <span class="window">bis Abfahrt 12:21</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="so-morn" id="so-morn-1" checked><label for="so-morn-1">Spaziergang am Rhein</label>
+          <input type="radio" name="so-morn" id="so-morn-2"><label for="so-morn-2">Noch ein Kaffee</label>
+          <input type="radio" name="so-morn" id="so-morn-3"><label for="so-morn-3">Ausschlafen</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-so-morn-1"><strong>Spaziergang am Rhein</strong>Vom Hotel aus direkt am Wasser entlang — der ruhigste Abschluss vor der Heimfahrt.</div>
+          <div class="panel" id="p-so-morn-2"><strong>Noch ein Kaffee</strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a> liegt auf dem Weg zum Hbf, ein letzter Stopp lohnt sich.</div>
+          <div class="panel" id="p-so-morn-3"><strong>Ausschlafen</strong>Kein festes Programm — einfach in Ruhe packen und rechtzeitig zum Hbf.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="time">12:21</div>
+      <div>
+        <h3>Abfahrt Köln Hbf</h3>
+        <p>RE7 zurück nach Münster, Ankunft ca. 14:22.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS -->
+<section class="info" id="infos">
+  <div class="wrap">
+    <h2>Gut zu wissen</h2>
+    <div class="info-grid">
+      <div>
+        <h4>Hotel</h4>
+        <p><a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a><br>Holzmarkt 47, Rheinauhafen</p>
+      </div>
+      <div>
+        <h4>Meister Gerhard</h4>
+        <p><a href="http://www.meister-gerhard.com/" target="_blank" rel="noopener">meister-gerhard.com</a><br>Rathenauplatz 8 · 0221 39757650</p>
+      </div>
+      <div>
+        <h4>NENI</h4>
+        <p><a href="https://nenifood.com/restaurants/koln" target="_blank" rel="noopener">nenifood.com/koln</a><br>Im Klapperhof 22–24 · 0221 16253561</p>
+      </div>
+      <div>
+        <h4>Claudius Therme</h4>
+        <p><a href="https://www.claudius-therme.de/" target="_blank" rel="noopener">claudius-therme.de</a><br>Sachsenbergstraße, Rheinpark Deutz</p>
+      </div>
+      <div>
+        <h4>Em Schnörres</h4>
+        <p><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">mehr erfahren</a><br>Dreikönigenstraße 2, Südstadt</p>
+      </div>
+      <div>
+        <h4>Monkey Bar</h4>
+        <p><a href="https://monkeybarkoeln.de/" target="_blank" rel="noopener">monkeybarkoeln.de</a><br>Im Klapperhof 22–24</p>
+      </div>
+      <div>
+        <h4>Barracuda Bar</h4>
+        <p><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">mehr erfahren</a><br>Belgisches Viertel</p>
+      </div>
+      <div>
+        <h4>Ernst Kaffeeröster</h4>
+        <p><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">ernst-kaffee.de</a><br>Bonner Straße 56, Südstadt</p>
+      </div>
+      <div>
+        <h4>Café Rotkehlchen</h4>
+        <p><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">caferotkehlchen.de</a><br>Merowingerstraße 34, Südstadt</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Zusammengestellt für ein Wochenende in Köln</footer>
+
+</body>
+</html>
