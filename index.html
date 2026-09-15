@@ -11,6 +11,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ein Wochenende in Köln · 25.–27.9">
 <meta name="twitter:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Rhine_river_embankment_in_Cologne.jpg?width=1200">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap');
 
@@ -228,11 +229,14 @@ a{color:var(--wine);}
 /* wire each tab to its panel */
 #f-cafe-1:checked ~ .panels #p-f-cafe-1,
 #f-cafe-2:checked ~ .panels #p-f-cafe-2,
+#f-eve-1:checked ~ .panels #p-f-eve-1,
+#f-eve-2:checked ~ .panels #p-f-eve-2,
 #s-morn-1:checked ~ .panels #p-s-morn-1,
 #s-morn-2:checked ~ .panels #p-s-morn-2,
 #s-free-1:checked ~ .panels #p-s-free-1,
 #s-free-2:checked ~ .panels #p-s-free-2,
 #s-free-3:checked ~ .panels #p-s-free-3,
+#s-free-4:checked ~ .panels #p-s-free-4,
 #s-club-1:checked ~ .panels #p-s-club-1,
 #s-club-2:checked ~ .panels #p-s-club-2,
 #s-club-3:checked ~ .panels #p-s-club-3,
@@ -243,26 +247,24 @@ a{color:var(--wine);}
   display:block;
 }
 
-/* ---------- Info / footer ---------- */
-.info{
-  background:var(--wine-deep); color:#F3E9DC;
-  padding:56px 0 60px; margin-top:8px;
-}
-.info h2{
-  font-family:'Fraunces', serif; font-weight:600; font-size:1.7rem; margin:0 0 28px; color:#fff;
-}
-.info-grid{
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:28px 32px;
-}
-.info-grid h4{
-  font-family:'Work Sans', sans-serif; font-size:13px; color:#D9B98A; margin:0 0 8px; font-weight:500;
-}
-.info-grid p{ margin:0; font-size:14.5px; color:#EFE1CE; line-height:1.6; }
-.info-grid a{ color:#F3E9DC; }
-
 footer{
   text-align:center; padding:26px 24px; font-size:13px; color:var(--ink-soft);
 }
+
+/* ---------- Karte ---------- */
+.map-section{ padding:48px 0 56px; border-top:1px solid var(--line); }
+#map{
+  width:100%; height:440px; border-radius:var(--radius);
+  border:1px solid var(--line);
+}
+.leaflet-popup-content-wrapper{
+  background:var(--paper); color:var(--ink); border-radius:var(--radius);
+  font-family:'Work Sans', sans-serif;
+}
+.leaflet-popup-content{ margin:12px 14px; font-size:14px; }
+.leaflet-popup-content strong{ font-family:'Fraunces', serif; font-size:15px; }
+.leaflet-popup-tip{ background:var(--paper); }
+.map-legend{ margin-top:14px; font-size:13px; color:var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -278,7 +280,7 @@ footer{
     <a href="#freitag">Freitag</a>
     <a href="#samstag">Samstag</a>
     <a href="#sonntag">Sonntag</a>
-    <a href="#infos">Infos</a>
+    <a href="#karte">Karte</a>
   </div>
 </nav>
 
@@ -319,7 +321,7 @@ footer{
           <div class="journey-line"></div>
           <div class="stop"><strong>14:22</strong>Münster Hbf</div>
         </div>
-        <p class="journey-note">Ca. 2 Std. Zeiten kurz vorher via DB Navigator prüfen — im September sind Bauarbeiten auf der Strecke angekündigt.</p>
+        <p class="journey-note">Ca. 2 Std.</p>
       </div>
     </div>
   </div>
@@ -382,9 +384,19 @@ footer{
 
     <div class="event">
       <div class="time">danach</div>
-      <div>
-        <h3><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">Em Schnörres</a></h3>
-        <p>5 Minuten weiter. Stammlokal der Südstadt, drinnen und draußen gemütlich, am Wochenende auch eine Tanzfläche — kein Eintritt.</p>
+      <div class="choice">
+        <div class="choice-head">
+          <h3>Wie der Abend weitergeht</h3>
+          <span class="window">ab ca. 20 Uhr</span>
+        </div>
+        <div class="tabs">
+          <input type="radio" name="f-eve" id="f-eve-1" checked><label for="f-eve-1">Em Schnörres</label>
+          <input type="radio" name="f-eve" id="f-eve-2"><label for="f-eve-2">Porzer Weinfest</label>
+        </div>
+        <div class="panels">
+          <div class="panel" id="p-f-eve-1"><strong><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">Em Schnörres</a></strong>5 Minuten weiter. Stammlokal der Südstadt, drinnen und draußen gemütlich, am Wochenende auch eine Tanzfläche — kein Eintritt.</div>
+          <div class="panel" id="p-f-eve-2"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Freitags bis 22 Uhr an der Rheinpromenade Porz, mit der Bahn ca. 20–25 Min. entfernt. Da am Samstag nichts vor der Therme um 13 Uhr ansteht, ist ein späterer Abend hier gut machbar — Weinstände, Livemusik und Blick auf den Rhein statt Südstadt-Kneipe.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -444,11 +456,13 @@ footer{
           <input type="radio" name="s-free" id="s-free-1" checked><label for="s-free-1">Ruhe im Zimmer</label>
           <input type="radio" name="s-free" id="s-free-2"><label for="s-free-2">Kaffeepause</label>
           <input type="radio" name="s-free" id="s-free-3"><label for="s-free-3">Kurzer Bummel</label>
+          <input type="radio" name="s-free" id="s-free-4"><label for="s-free-4">Porzer Weinfest</label>
         </div>
         <div class="panels">
           <div class="panel" id="p-s-free-1"><strong>Ruhe im Zimmer</strong>Nach der Therme bleibt nicht viel Zeit bis zum Abendessen — einfach ankommen, umziehen, nichts mehr einplanen.</div>
-          <div class="panel" id="p-s-free-2"><strong>Kaffeepause</strong>Ein ruhiger Stopp auf dem Weg zur Innenstadt, statt eines eigenen Programmpunkts.</div>
-          <div class="panel" id="p-s-free-3"><strong>Kurzer Bummel</strong>Da NENI im Belgischen Viertel liegt, bietet sich ein kurzer Stopp dort unterwegs an, statt extra Zeit einzuplanen.</div>
+          <div class="panel" id="p-s-free-2"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Café-Bar am Brüsseler Platz, mitten im Belgischen Viertel und damit direkt auf dem Weg zu NENI — guter Kaffee, entspannte Atmosphäre.</div>
+          <div class="panel" id="p-s-free-3"><strong><a href="https://koeln.mitvergnuegen.com/2026/ehrenstrasse/" target="_blank" rel="noopener">Ehrenstraße</a></strong>Kölns beliebteste Einkaufsstraße zwischen Friesenplatz und Rudolfplatz, viele kleine Boutiquen — auch das liegt auf dem Weg zu NENI.</div>
+          <div class="panel" id="p-s-free-4"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Samstags 14–22 Uhr an der Rheinpromenade Porz. Von der Therme (Deutz) aus mit der Bahn Linie 7 erreichbar, aber eng: realistisch bleibt nur ca. 1 Std. vor Ort, wenn ihr direkt von dort statt über das Hotel zu NENI weiterzieht.</div>
         </div>
       </div>
     </div>
@@ -484,8 +498,8 @@ footer{
         </div>
         <div class="panels">
           <div class="panel" id="p-s-club-1"><strong><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">Barracuda Bar</a></strong>Nur wenige Minuten von der Monkey Bar entfernt. Kleine Tanzfläche, am Wochenende DJs mit elektronischer Musik, dazu richtig gute Cocktails.</div>
-          <div class="panel" id="p-s-club-2"><strong>Hallmackenreuther</strong>Brüsseler Platz 9. Tagsüber Café, abends Bar mit gutem Sound — Kölner Kultadresse seit 1990, entspannter Einstieg vor dem Weiterziehen.</div>
-          <div class="panel" id="p-s-club-3"><strong>Coco Schmitz</strong>Kleiner Kellerklub unter dem Salon Schmitz, verspiegelte Wände, Funk &amp; Electro — für alle, die es später noch etwas tanzlastiger mögen.</div>
+          <div class="panel" id="p-s-club-2"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Brüsseler Platz 9. Tagsüber Café, abends Bar mit gutem Sound — Kölner Kultadresse seit 1990, entspannter Einstieg vor dem Weiterziehen.</div>
+          <div class="panel" id="p-s-club-3"><strong><a href="https://salonschmitz.com/coco" target="_blank" rel="noopener">Coco Schmitz</a></strong>Kleiner Kellerklub unter dem Salon Schmitz, verspiegelte Wände, Funk &amp; Electro — für alle, die es später noch etwas tanzlastiger mögen.</div>
         </div>
       </div>
     </div>
@@ -540,56 +554,55 @@ footer{
   </div>
 </section>
 
-<!-- INFOS -->
-<section class="info" id="infos">
+<!-- KARTE -->
+<section class="map-section" id="karte">
   <div class="wrap">
-    <h2>Gut zu wissen</h2>
-    <div class="info-grid">
-      <div>
-        <h4>Hotel</h4>
-        <p><a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a><br>Holzmarkt 47, Rheinauhafen</p>
-      </div>
-      <div>
-        <h4>Meister Gerhard</h4>
-        <p><a href="http://www.meister-gerhard.com/" target="_blank" rel="noopener">meister-gerhard.com</a><br>Rathenauplatz 8 · 0221 39757650</p>
-      </div>
-      <div>
-        <h4>NENI</h4>
-        <p><a href="https://nenifood.com/restaurants/koln" target="_blank" rel="noopener">nenifood.com/koln</a><br>Im Klapperhof 22–24 · 0221 16253561</p>
-      </div>
-      <div>
-        <h4>Claudius Therme</h4>
-        <p><a href="https://www.claudius-therme.de/" target="_blank" rel="noopener">claudius-therme.de</a><br>Sachsenbergstraße, Rheinpark Deutz</p>
-      </div>
-      <div>
-        <h4>Em Schnörres</h4>
-        <p><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">mehr erfahren</a><br>Dreikönigenstraße 2, Südstadt</p>
-      </div>
-      <div>
-        <h4>Monkey Bar</h4>
-        <p><a href="https://monkeybarkoeln.de/" target="_blank" rel="noopener">monkeybarkoeln.de</a><br>Im Klapperhof 22–24</p>
-      </div>
-      <div>
-        <h4>Barracuda Bar</h4>
-        <p><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">mehr erfahren</a><br>Belgisches Viertel</p>
-      </div>
-      <div>
-        <h4>Ernst Kaffeeröster</h4>
-        <p><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">ernst-kaffee.de</a><br>Bonner Straße 56, Südstadt</p>
-      </div>
-      <div>
-        <h4>Café Rotkehlchen</h4>
-        <p><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">caferotkehlchen.de</a><br>Merowingerstraße 34, Südstadt</p>
-      </div>
-      <div>
-        <h4>Porzer Weinfest</h4>
-        <p><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">porzerweinfest.de</a><br>25.–27.9 · Rheinpromenade Porz</p>
-      </div>
+    <div class="day-head">
+      <h2>Alle Orte im Überblick</h2>
+      <span>Hotel, Restaurants, Cafés &amp; Bars</span>
     </div>
+    <div id="map"></div>
+    <p class="map-legend">Ungefähre Lage aller genannten Adressen — zum Reinzoomen und für die Route unterwegs.</p>
   </div>
 </section>
 
 <footer>Zusammengestellt für ein Wochenende in Köln</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  var places = [
+    { name: "NH Köln Altstadt", info: "Hotel · Holzmarkt 47", lat: 50.9294, lng: 6.9607, url: "https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" },
+    { name: "Meister Gerhard", info: "Freitag, 18 Uhr · Rathenauplatz 8", lat: 50.9245, lng: 6.9615, url: "http://www.meister-gerhard.com/" },
+    { name: "Em Schnörres", info: "Freitagabend · Dreikönigenstraße 2", lat: 50.9260, lng: 6.9615, url: "https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" },
+    { name: "Ernst Kaffeeröster", info: "Café · Bonner Straße 56", lat: 50.9190, lng: 6.9585, url: "https://www.ernst-kaffee.de/de-de" },
+    { name: "Café Rotkehlchen", info: "Café · Merowingerstraße 34", lat: 50.9230, lng: 6.9600, url: "https://caferotkehlchen.de/" },
+    { name: "Claudius Therme", info: "Samstag, 13 Uhr · Rheinpark Deutz", lat: 50.9505, lng: 6.9755, url: "https://www.claudius-therme.de/" },
+    { name: "NENI & Monkey Bar", info: "Samstag, 18 Uhr · Im Klapperhof 22–24", lat: 50.9425, lng: 6.9440, url: "https://nenifood.com/restaurants/koln" },
+    { name: "Hallmackenreuther", info: "Café tagsüber, Bar abends · Brüsseler Platz 9", lat: 50.9367, lng: 6.9345, url: "https://www.hallmackenreuther.de" },
+    { name: "Coco Schmitz", info: "Tanzen · Aachener Straße 28", lat: 50.9375, lng: 6.9330, url: "https://salonschmitz.com/coco" },
+    { name: "Barracuda Bar", info: "Tanzen · Belgisches Viertel", lat: 50.9370, lng: 6.9350, url: "https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" },
+    { name: "Porzer Weinfest", info: "25.–27.9 · Rheinpromenade Porz", lat: 50.8825, lng: 7.0575, url: "https://www.porzerweinfest.de/" }
+  ];
+
+  var map = L.map('map', { scrollWheelZoom: false }).setView([50.930, 6.960], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+
+  var markerIcon = L.divIcon({
+    className: '',
+    html: '<div style="width:14px;height:14px;border-radius:50%;background:#B4536A;border:2px solid #FBF1EC;box-shadow:0 0 0 1px #B4536A;"></div>',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7]
+  });
+
+  places.forEach(function(p){
+    L.marker([p.lat, p.lng], { icon: markerIcon }).addTo(map)
+      .bindPopup('<strong>' + p.name + '</strong><br>' + p.info + '<br><a href="' + p.url + '" target="_blank" rel="noopener">mehr erfahren →</a>');
+  });
+</script>
 
 </body>
 </html>
