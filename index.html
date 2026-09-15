@@ -207,15 +207,16 @@ a{color:var(--wine);}
 .choice-head .window{ font-size:13px; color:var(--ink-soft); }
 
 .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
-.tabs input{ position:absolute; opacity:0; pointer-events:none; }
-.tabs label{
+.tabs button{
+  font-family:'Work Sans', sans-serif;
   font-size:13.5px; color:var(--ink-soft);
+  background:transparent;
   border:1px solid var(--line); border-radius:20px;
   padding:6px 14px; cursor:pointer; user-select:none;
   transition:background .15s ease, color .15s ease, border-color .15s ease;
 }
-.tabs label:hover{ border-color:var(--wine); color:var(--wine); }
-.tabs input:checked + label{
+.tabs button:hover{ border-color:var(--wine); color:var(--wine); }
+.tabs button.active{
   background:var(--wine); border-color:var(--wine); color:#fff;
 }
 .panels{ position:relative; }
@@ -223,29 +224,9 @@ a{color:var(--wine);}
   display:none;
   font-size:15px; color:var(--ink-soft);
 }
+.panel.active{ display:block; }
 .panel strong{ color:var(--ink); font-family:'Fraunces', serif; font-weight:600; font-size:16px; display:block; margin-bottom:4px; }
 .panel a{ font-weight:600; }
-
-/* wire each tab to its panel */
-#f-cafe-1:checked ~ .panels #p-f-cafe-1,
-#f-cafe-2:checked ~ .panels #p-f-cafe-2,
-#f-eve-1:checked ~ .panels #p-f-eve-1,
-#f-eve-2:checked ~ .panels #p-f-eve-2,
-#s-morn-1:checked ~ .panels #p-s-morn-1,
-#s-morn-2:checked ~ .panels #p-s-morn-2,
-#s-free-1:checked ~ .panels #p-s-free-1,
-#s-free-2:checked ~ .panels #p-s-free-2,
-#s-free-3:checked ~ .panels #p-s-free-3,
-#s-free-4:checked ~ .panels #p-s-free-4,
-#s-club-1:checked ~ .panels #p-s-club-1,
-#s-club-2:checked ~ .panels #p-s-club-2,
-#s-club-3:checked ~ .panels #p-s-club-3,
-#so-morn-1:checked ~ .panels #p-so-morn-1,
-#so-morn-2:checked ~ .panels #p-so-morn-2,
-#so-morn-3:checked ~ .panels #p-so-morn-3,
-#so-morn-4:checked ~ .panels #p-so-morn-4{
-  display:block;
-}
 
 footer{
   text-align:center; padding:26px 24px; font-size:13px; color:var(--ink-soft);
@@ -312,7 +293,7 @@ footer{
           <div class="journey-line"></div>
           <div class="stop"><strong>16:38</strong>Köln Hbf</div>
         </div>
-        <p class="journey-note">Ca. 2 Std. 4 Min. Alternativ 13:34 → 15:38, falls es früher losgehen soll.</p>
+        <p class="journey-note">Ca. 2 Std. 4 Min.</p>
       </div>
       <div class="journey-card">
         <span class="journey-label">Rückfahrt · Sonntag</span>
@@ -363,12 +344,12 @@ footer{
           <span class="window">15 – 18 Uhr</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="f-cafe" id="f-cafe-1" checked><label for="f-cafe-1">Ernst Kaffeeröster</label>
-          <input type="radio" name="f-cafe" id="f-cafe-2"><label for="f-cafe-2">Café Rotkehlchen</label>
+          <button type="button" class="tab-btn active">Ernst Kaffeeröster</button>
+          <button type="button" class="tab-btn">Café Rotkehlchen</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-f-cafe-1"><strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a></strong>„Slow Bar"-Kaffee, ruhig und gemütlich — genau richtig, um nach der Zugfahrt anzukommen und zu quatschen.</div>
-          <div class="panel" id="p-f-cafe-2"><strong><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">Café Rotkehlchen</a></strong>Kuchen und belegte Brote, bei Kölner:innen sehr beliebt — dafür oft gut gefüllt.</div>
+          <div class="panel active"><strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a></strong>„Slow Bar"-Kaffee, ruhig und gemütlich — genau richtig, um nach der Zugfahrt anzukommen und zu quatschen.</div>
+          <div class="panel"><strong><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">Café Rotkehlchen</a></strong>Kuchen und belegte Brote, bei Kölner:innen sehr beliebt — dafür oft gut gefüllt.</div>
         </div>
       </div>
     </div>
@@ -390,12 +371,12 @@ footer{
           <span class="window">ab ca. 20 Uhr</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="f-eve" id="f-eve-1" checked><label for="f-eve-1">Em Schnörres</label>
-          <input type="radio" name="f-eve" id="f-eve-2"><label for="f-eve-2">Porzer Weinfest</label>
+          <button type="button" class="tab-btn active">Em Schnörres</button>
+          <button type="button" class="tab-btn">Porzer Weinfest</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-f-eve-1"><strong><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">Em Schnörres</a></strong>5 Minuten weiter. Stammlokal der Südstadt, drinnen und draußen gemütlich, am Wochenende auch eine Tanzfläche — kein Eintritt.</div>
-          <div class="panel" id="p-f-eve-2"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Freitags bis 22 Uhr an der Rheinpromenade Porz, mit der Bahn ca. 20–25 Min. entfernt. Da am Samstag nichts vor der Therme um 13 Uhr ansteht, ist ein späterer Abend hier gut machbar — Weinstände, Livemusik und Blick auf den Rhein statt Südstadt-Kneipe.</div>
+          <div class="panel active"><strong><a href="https://www.koelntourismus.de/essen-trinken/gastronomie/em-schnoerres" target="_blank" rel="noopener">Em Schnörres</a></strong>5 Minuten weiter. Stammlokal der Südstadt, drinnen und draußen gemütlich, am Wochenende auch eine Tanzfläche — kein Eintritt.</div>
+          <div class="panel"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Freitags bis 22 Uhr an der Rheinpromenade Porz, mit der Bahn ca. 20–25 Min. entfernt. Da am Samstag nichts vor der Therme um 13 Uhr ansteht, ist ein späterer Abend hier gut machbar — Weinstände, Livemusik und Blick auf den Rhein statt Südstadt-Kneipe.</div>
         </div>
       </div>
     </div>
@@ -426,12 +407,12 @@ footer{
           <span class="window">bis ca. 12:30</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="s-morn" id="s-morn-1" checked><label for="s-morn-1">Ausschlafen im Hotel</label>
-          <input type="radio" name="s-morn" id="s-morn-2"><label for="s-morn-2">Kurzer Spaziergang</label>
+          <button type="button" class="tab-btn active">Ausschlafen im Hotel</button>
+          <button type="button" class="tab-btn">Kurzer Spaziergang</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-s-morn-1"><strong>Ausschlafen im Hotel</strong>Keine Uhrzeit, kein Programm — einfach ausruhen, bevor es Richtung Therme geht.</div>
-          <div class="panel" id="p-s-morn-2"><strong>Kurzer Spaziergang</strong>Eine Runde durch die Südstadt oder am Rhein, bevor es zur Therme geht.</div>
+          <div class="panel active"><strong>Ausschlafen im Hotel</strong>Keine Uhrzeit, kein Programm — einfach ausruhen, bevor es Richtung Therme geht.</div>
+          <div class="panel"><strong>Kurzer Spaziergang</strong>Eine Runde durch die Südstadt oder am Rhein, bevor es zur Therme geht.</div>
         </div>
       </div>
     </div>
@@ -453,16 +434,16 @@ footer{
           <span class="window">vor dem Abendessen</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="s-free" id="s-free-1" checked><label for="s-free-1">Ruhe im Zimmer</label>
-          <input type="radio" name="s-free" id="s-free-2"><label for="s-free-2">Kaffeepause</label>
-          <input type="radio" name="s-free" id="s-free-3"><label for="s-free-3">Kurzer Bummel</label>
-          <input type="radio" name="s-free" id="s-free-4"><label for="s-free-4">Porzer Weinfest</label>
+          <button type="button" class="tab-btn active">Ruhe im Zimmer</button>
+          <button type="button" class="tab-btn">Kaffeepause</button>
+          <button type="button" class="tab-btn">Kurzer Bummel</button>
+          <button type="button" class="tab-btn">Porzer Weinfest</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-s-free-1"><strong>Ruhe im Zimmer</strong>Nach der Therme bleibt nicht viel Zeit bis zum Abendessen — einfach ankommen, umziehen, nichts mehr einplanen.</div>
-          <div class="panel" id="p-s-free-2"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Café-Bar am Brüsseler Platz, mitten im Belgischen Viertel und damit direkt auf dem Weg zu NENI — guter Kaffee, entspannte Atmosphäre.</div>
-          <div class="panel" id="p-s-free-3"><strong><a href="https://koeln.mitvergnuegen.com/2026/ehrenstrasse/" target="_blank" rel="noopener">Ehrenstraße</a></strong>Kölns beliebteste Einkaufsstraße zwischen Friesenplatz und Rudolfplatz, viele kleine Boutiquen — auch das liegt auf dem Weg zu NENI.</div>
-          <div class="panel" id="p-s-free-4"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Samstags 14–22 Uhr an der Rheinpromenade Porz. Von der Therme (Deutz) aus mit der Bahn Linie 7 erreichbar, aber eng: realistisch bleibt nur ca. 1 Std. vor Ort, wenn ihr direkt von dort statt über das Hotel zu NENI weiterzieht.</div>
+          <div class="panel active"><strong>Ruhe im Zimmer</strong>Nach der Therme bleibt nicht viel Zeit bis zum Abendessen — einfach ankommen, umziehen, nichts mehr einplanen.</div>
+          <div class="panel"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Café-Bar am Brüsseler Platz, mitten im Belgischen Viertel und damit direkt auf dem Weg zu NENI — guter Kaffee, entspannte Atmosphäre.</div>
+          <div class="panel"><strong><a href="https://koeln.mitvergnuegen.com/2026/ehrenstrasse/" target="_blank" rel="noopener">Ehrenstraße</a></strong>Kölns beliebteste Einkaufsstraße zwischen Friesenplatz und Rudolfplatz, viele kleine Boutiquen — auch das liegt auf dem Weg zu NENI.</div>
+          <div class="panel"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Samstags 14–22 Uhr an der Rheinpromenade Porz. Von der Therme (Deutz) aus mit der Bahn Linie 7 erreichbar, aber eng: realistisch bleibt nur ca. 1 Std. vor Ort, wenn ihr direkt von dort statt über das Hotel zu NENI weiterzieht.</div>
         </div>
       </div>
     </div>
@@ -492,14 +473,14 @@ footer{
           <span class="window">alle drei im Belgischen Viertel</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="s-club" id="s-club-1" checked><label for="s-club-1">Barracuda Bar</label>
-          <input type="radio" name="s-club" id="s-club-2"><label for="s-club-2">Hallmackenreuther</label>
-          <input type="radio" name="s-club" id="s-club-3"><label for="s-club-3">Coco Schmitz</label>
+          <button type="button" class="tab-btn active">Barracuda Bar</button>
+          <button type="button" class="tab-btn">Hallmackenreuther</button>
+          <button type="button" class="tab-btn">Coco Schmitz</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-s-club-1"><strong><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">Barracuda Bar</a></strong>Nur wenige Minuten von der Monkey Bar entfernt. Kleine Tanzfläche, am Wochenende DJs mit elektronischer Musik, dazu richtig gute Cocktails.</div>
-          <div class="panel" id="p-s-club-2"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Brüsseler Platz 9. Tagsüber Café, abends Bar mit gutem Sound — Kölner Kultadresse seit 1990, entspannter Einstieg vor dem Weiterziehen.</div>
-          <div class="panel" id="p-s-club-3"><strong><a href="https://salonschmitz.com/coco" target="_blank" rel="noopener">Coco Schmitz</a></strong>Kleiner Kellerklub unter dem Salon Schmitz, verspiegelte Wände, Funk &amp; Electro — für alle, die es später noch etwas tanzlastiger mögen.</div>
+          <div class="panel active"><strong><a href="https://geheimtipp-koeln.de/geheimtipp/barracuda-bar-feinstes-bartendering-im-belgischen-viertel/" target="_blank" rel="noopener">Barracuda Bar</a></strong>Nur wenige Minuten von der Monkey Bar entfernt. Kleine Tanzfläche, am Wochenende DJs mit elektronischer Musik, dazu richtig gute Cocktails.</div>
+          <div class="panel"><strong><a href="https://www.hallmackenreuther.de" target="_blank" rel="noopener">Hallmackenreuther</a></strong>Brüsseler Platz 9. Tagsüber Café, abends Bar mit gutem Sound — Kölner Kultadresse seit 1990, entspannter Einstieg vor dem Weiterziehen.</div>
+          <div class="panel"><strong><a href="https://salonschmitz.com/coco" target="_blank" rel="noopener">Coco Schmitz</a></strong>Kleiner Kellerklub unter dem Salon Schmitz, verspiegelte Wände, Funk &amp; Electro — für alle, die es später noch etwas tanzlastiger mögen.</div>
         </div>
       </div>
     </div>
@@ -530,16 +511,16 @@ footer{
           <span class="window">bis Abfahrt 12:21</span>
         </div>
         <div class="tabs">
-          <input type="radio" name="so-morn" id="so-morn-1" checked><label for="so-morn-1">Spaziergang am Rhein</label>
-          <input type="radio" name="so-morn" id="so-morn-2"><label for="so-morn-2">Noch ein Kaffee</label>
-          <input type="radio" name="so-morn" id="so-morn-3"><label for="so-morn-3">Ausschlafen</label>
-          <input type="radio" name="so-morn" id="so-morn-4"><label for="so-morn-4">Porzer Weinfest</label>
+          <button type="button" class="tab-btn active">Spaziergang am Rhein</button>
+          <button type="button" class="tab-btn">Noch ein Kaffee</button>
+          <button type="button" class="tab-btn">Ausschlafen</button>
+          <button type="button" class="tab-btn">Porzer Weinfest</button>
         </div>
         <div class="panels">
-          <div class="panel" id="p-so-morn-1"><strong>Spaziergang am Rhein</strong>Vom Hotel aus direkt am Wasser entlang — der ruhigste Abschluss vor der Heimfahrt.</div>
-          <div class="panel" id="p-so-morn-2"><strong>Noch ein Kaffee</strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a> liegt auf dem Weg zum Hbf, ein letzter Stopp lohnt sich.</div>
-          <div class="panel" id="p-so-morn-3"><strong>Ausschlafen</strong>Kein festes Programm — einfach in Ruhe packen und rechtzeitig zum Hbf.</div>
-          <div class="panel" id="p-so-morn-4"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Sonntags 11–18 Uhr an der Rheinpromenade Porz, mit S12/S13 oder Bahn Linie 7 gut 20–25 Min. entfernt. Zeitlich knapp vor der Abfahrt um 12:21 — eher etwas für alle, die aufs Frühstück verzichten oder noch einen Tag dranhängen.</div>
+          <div class="panel active"><strong>Spaziergang am Rhein</strong>Vom Hotel aus direkt am Wasser entlang — der ruhigste Abschluss vor der Heimfahrt.</div>
+          <div class="panel"><strong>Noch ein Kaffee</strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a> liegt auf dem Weg zum Hbf, ein letzter Stopp lohnt sich.</div>
+          <div class="panel"><strong>Ausschlafen</strong>Kein festes Programm — einfach in Ruhe packen und rechtzeitig zum Hbf.</div>
+          <div class="panel"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Sonntags 11–18 Uhr an der Rheinpromenade Porz, mit S12/S13 oder Bahn Linie 7 gut 20–25 Min. entfernt. Zeitlich knapp vor der Abfahrt um 12:21 — eher etwas für alle, die aufs Frühstück verzichten oder noch einen Tag dranhängen.</div>
         </div>
       </div>
     </div>
@@ -568,6 +549,20 @@ footer{
 
 <footer>Zusammengestellt für ein Wochenende in Köln</footer>
 
+<script>
+  document.querySelectorAll('.choice').forEach(function(choice){
+    var buttons = choice.querySelectorAll('.tabs button');
+    var panels = choice.querySelectorAll('.panel');
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        buttons.forEach(function(b){ b.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        btn.classList.add('active');
+        panels[i].classList.add('active');
+      });
+    });
+  });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
   var places = [
