@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ein Wochenende in Köln</title>
+<meta property="og:title" content="Ein Wochenende in Köln · 25.–27.9">
+<meta property="og:description" content="Drei Tage Rhein, Wein und gute Gespräche — das Programm fürs Mädelswochenende in Köln.">
+<meta property="og:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Rhine_river_embankment_in_Cologne.jpg?width=1200">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ein Wochenende in Köln · 25.–27.9">
+<meta name="twitter:image" content="https://commons.wikimedia.org/wiki/Special:FilePath/Rhine_river_embankment_in_Cologne.jpg?width=1200">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap');
 
@@ -95,9 +102,13 @@ a{color:var(--wine);}
   display:block; font-family:'Fraunces', serif; font-weight:600; font-size:16px; color:var(--ink);
 }
 
-.skyline{ width:100%; max-width:280px; height:auto; margin-top:32px; }
-.skyline path, .skyline line{ stroke:var(--wine); fill:none; stroke-width:1.6; stroke-linecap:round; }
-.skyline .river{ stroke:var(--river); }
+/* ---------- Hero banner image ---------- */
+.hero-banner{ position:relative; width:100%; height:min(46vw, 360px); min-height:200px; overflow:hidden; }
+.hero-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+.hero-banner::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(60,42,46,0.15) 0%, rgba(60,42,46,0.05) 45%, var(--paper) 100%);
+}
 
 /* ---------- Journey (Zugverbindungen) ---------- */
 .journey{ padding:40px 0 8px; }
@@ -227,7 +238,8 @@ a{color:var(--wine);}
 #s-club-3:checked ~ .panels #p-s-club-3,
 #so-morn-1:checked ~ .panels #p-so-morn-1,
 #so-morn-2:checked ~ .panels #p-so-morn-2,
-#so-morn-3:checked ~ .panels #p-so-morn-3{
+#so-morn-3:checked ~ .panels #p-so-morn-3,
+#so-morn-4:checked ~ .panels #p-so-morn-4{
   display:block;
 }
 
@@ -255,6 +267,10 @@ footer{
 </head>
 <body>
 
+<div class="hero-banner">
+  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rhine_river_embankment_in_Cologne.jpg?width=1600" alt="Rheinufer in Köln mit Blick auf die Altstadt">
+</div>
+
 <nav class="nav">
   <div class="nav-inner">
     <span class="nav-title">Köln, 25.–27.9</span>
@@ -276,12 +292,6 @@ footer{
       <div><strong><a href="https://www.nh-hotels.com/en/hotel/nh-koeln-altstadt" target="_blank" rel="noopener">NH Köln Altstadt</a></strong>Holzmarkt 47, Rheinauhafen</div>
       <div><strong>7 Personen</strong>ab Münster mit dem RE7</div>
     </div>
-    <svg class="skyline" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 78 L20 30 L28 12 L36 30 L36 78" />
-      <path d="M36 78 L36 30 L44 12 L52 30 L52 78" />
-      <line class="river" x1="0" y1="78" x2="280" y2="78" />
-      <path class="river" d="M120 70 Q150 60 180 70 T260 70" />
-    </svg>
   </div>
 </header>
 
@@ -509,11 +519,13 @@ footer{
           <input type="radio" name="so-morn" id="so-morn-1" checked><label for="so-morn-1">Spaziergang am Rhein</label>
           <input type="radio" name="so-morn" id="so-morn-2"><label for="so-morn-2">Noch ein Kaffee</label>
           <input type="radio" name="so-morn" id="so-morn-3"><label for="so-morn-3">Ausschlafen</label>
+          <input type="radio" name="so-morn" id="so-morn-4"><label for="so-morn-4">Porzer Weinfest</label>
         </div>
         <div class="panels">
           <div class="panel" id="p-so-morn-1"><strong>Spaziergang am Rhein</strong>Vom Hotel aus direkt am Wasser entlang — der ruhigste Abschluss vor der Heimfahrt.</div>
           <div class="panel" id="p-so-morn-2"><strong>Noch ein Kaffee</strong><a href="https://www.ernst-kaffee.de/de-de" target="_blank" rel="noopener">Ernst Kaffeeröster</a> liegt auf dem Weg zum Hbf, ein letzter Stopp lohnt sich.</div>
           <div class="panel" id="p-so-morn-3"><strong>Ausschlafen</strong>Kein festes Programm — einfach in Ruhe packen und rechtzeitig zum Hbf.</div>
+          <div class="panel" id="p-so-morn-4"><strong><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">Porzer Weinfest</a></strong>Sonntags 11–18 Uhr an der Rheinpromenade Porz, mit S12/S13 oder Bahn Linie 7 gut 20–25 Min. entfernt. Zeitlich knapp vor der Abfahrt um 12:21 — eher etwas für alle, die aufs Frühstück verzichten oder noch einen Tag dranhängen.</div>
         </div>
       </div>
     </div>
@@ -568,6 +580,10 @@ footer{
       <div>
         <h4>Café Rotkehlchen</h4>
         <p><a href="https://caferotkehlchen.de/" target="_blank" rel="noopener">caferotkehlchen.de</a><br>Merowingerstraße 34, Südstadt</p>
+      </div>
+      <div>
+        <h4>Porzer Weinfest</h4>
+        <p><a href="https://www.porzerweinfest.de/" target="_blank" rel="noopener">porzerweinfest.de</a><br>25.–27.9 · Rheinpromenade Porz</p>
       </div>
     </div>
   </div>
