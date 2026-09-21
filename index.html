@@ -103,12 +103,12 @@ a{color:var(--wine);}
   display:block; font-family:'Fraunces', serif; font-weight:600; font-size:16px; color:var(--ink);
 }
 
-/* ---------- Hero banner image ---------- */
+/* ---------- Hero banner illustration ---------- */
 .hero-banner{ position:relative; width:100%; height:min(46vw, 360px); min-height:200px; overflow:hidden; }
-.hero-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+.hero-banner svg{ width:100%; height:100%; display:block; }
 .hero-banner::after{
   content:''; position:absolute; inset:0;
-  background:linear-gradient(to bottom, rgba(60,42,46,0.15) 0%, rgba(60,42,46,0.05) 45%, var(--paper) 100%);
+  background:linear-gradient(to bottom, rgba(60,42,46,0.05) 0%, rgba(60,42,46,0.02) 55%, var(--paper) 100%);
 }
 
 /* ---------- Journey (Zugverbindungen) ---------- */
@@ -251,7 +251,63 @@ footer{
 <body>
 
 <div class="hero-banner">
-  <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rhine_river_embankment_in_Cologne.jpg?width=1600" alt="Rheinufer in Köln mit Blick auf die Altstadt">
+  <svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Illustration von Köln: Dom, Rhein und Kranhäuser">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F5E1DA"/>
+        <stop offset="100%" stop-color="#FBF1EC"/>
+      </linearGradient>
+      <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E2B074" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#E2B074" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1200" height="400" fill="url(#sky)"/>
+    <circle cx="960" cy="130" r="140" fill="url(#sun)"/>
+    <circle cx="960" cy="130" r="34" fill="#C99566"/>
+
+    <!-- Hohenzollernbrücke -->
+    <g fill="none" stroke="#9C7A9E" stroke-width="4" opacity="0.55">
+      <path d="M40 330 Q100 270 160 330"/>
+      <path d="M160 330 Q220 270 280 330"/>
+      <path d="M280 330 Q340 270 400 330"/>
+      <line x1="40" y1="330" x2="400" y2="330"/>
+    </g>
+
+    <!-- Rhein -->
+    <rect x="0" y="335" width="1200" height="65" fill="#9C7A9E" opacity="0.22"/>
+    <path d="M0 350 Q150 340 300 350 T600 350 T900 350 T1200 350" fill="none" stroke="#9C7A9E" stroke-width="2" opacity="0.4"/>
+
+    <!-- Kölner Dom -->
+    <g fill="#7A2E44">
+      <path d="M520 335 L520 120 L534 60 L548 120 L548 335 Z"/>
+      <path d="M548 335 L548 100 L560 100 L560 335 Z"/>
+      <path d="M560 335 L560 100 L572 100 L572 335 Z"/>
+      <path d="M572 335 L572 120 L586 60 L600 120 L600 335 Z"/>
+      <rect x="540" y="160" width="6" height="18" opacity="0.5"/>
+      <rect x="540" y="195" width="6" height="18" opacity="0.5"/>
+      <rect x="574" y="160" width="6" height="18" opacity="0.5"/>
+      <rect x="574" y="195" width="6" height="18" opacity="0.5"/>
+    </g>
+
+    <!-- Groß St. Martin -->
+    <g fill="#B4536A" opacity="0.85">
+      <rect x="440" y="230" width="34" height="105"/>
+      <path d="M436 230 L457 195 L478 230 Z"/>
+      <rect x="452" y="205" width="10" height="20"/>
+    </g>
+
+    <!-- Kranhäuser (Rheinauhafen) -->
+    <g fill="#3C2A2E" opacity="0.82">
+      <rect x="860" y="190" width="34" height="145"/>
+      <path d="M860 190 L945 155 L945 178 L894 210 Z"/>
+      <rect x="925" y="210" width="34" height="125"/>
+      <path d="M925 210 L1005 178 L1005 200 L959 228 Z"/>
+      <rect x="990" y="225" width="34" height="110"/>
+      <path d="M990 225 L1065 196 L1065 217 L1024 243 Z"/>
+    </g>
+  </svg>
 </div>
 
 <nav class="nav">
